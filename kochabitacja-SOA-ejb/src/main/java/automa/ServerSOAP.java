@@ -1,5 +1,8 @@
 package automa;
 
+import automa.model.Automa;
+import automa.model.State;
+
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

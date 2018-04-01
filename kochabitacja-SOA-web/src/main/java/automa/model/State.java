@@ -1,6 +1,4 @@
-package automa;
-
-import javax.xml.bind.annotation.XmlElement;
+package automa.model;
 
 public class State {
 
@@ -14,7 +12,6 @@ public class State {
         this.stateName = stateName;
     }
 
-    @XmlElement(name = "stateName")
     public String getStateName() {
         return stateName;
     }
@@ -29,5 +26,4 @@ public class State {
                 "stateName='" + stateName + '\'' +
                 '}';
     }
-
 }
