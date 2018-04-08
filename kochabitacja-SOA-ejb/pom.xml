@@ -40,6 +40,26 @@
     </licenses>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/javax.annotation/jsr250-api -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jboss/jboss-annotations-ejb3 -->
+        <dependency>
+            <groupId>jboss</groupId>
+            <artifactId>jboss-annotations-ejb3</artifactId>
+            <version>4.2.2.GA</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jboss.ws/jbossws-api -->
+        <dependency>
+            <groupId>org.jboss.ws</groupId>
+            <artifactId>jbossws-api</artifactId>
+            <version>1.0.1.Final</version>
+        </dependency>
+
 
         <!-- Declare the APIs we depend on and need for compilation. All of 
             them are provided by JBoss WildFly -->

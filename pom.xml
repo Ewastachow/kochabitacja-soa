@@ -36,6 +36,7 @@
         <module>kochabitacja-SOA-ejb</module>
         <module>kochabitacja-SOA-web</module>
         <module>kochabitacja-SOA-ear</module>
+        <module>kochabitacja-SOA-SOAPClient</module>
     </modules>
 
     <properties>

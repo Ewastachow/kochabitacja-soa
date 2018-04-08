@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kochabitacja-SOA</artifactId>
+        <groupId>kis.agh.edu.pl</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kochabitacja-SOA-SOAPClient</artifactId>
+
+    <build>
+        <plugins>
+            <!-- usage of jax-ws maven plugin-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>1.12</version>
+                <executions>
+                    <execution>
+                        <id>wsimport-from-jdk</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- using wsdl from an url -->
+                    <wsdlUrls>
+                        <wsdlUrl>
+                            http://localhost:8080/kochabitacja-soap?wsdl
+                        </wsdlUrl>
+                    </wsdlUrls>
+                    <!-- or using wsdls file directory -->
+                    <!-- <wsdlDirectory>src/wsdl</wsdlDirectory> -->
+                    <!-- which wsdl file -->
+                    <!-- <wsdlFiles> -->
+                    <!-- <wsdlFile>myWSDL.wsdl</wsdlFile> -->
+                    <!--</wsdlFiles> -->
+                    <!-- Keep generated files -->
+                    <keep>true</keep>
+                    <!-- Package name -->
+                    <packageName>automa.model</packageName>
+                    <!-- generated source files destination-->
+                    <sourceDestDir>src/main/java</sourceDestDir>
+                    <sei/>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
