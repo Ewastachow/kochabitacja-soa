@@ -30,14 +30,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link State }
-     * 
-     */
-    public State createState() {
-        return new State();
-    }
-
-    /**
      * Create an instance of {@link Automa }
      * 
      */
@@ -59,6 +51,14 @@ public class ObjectFactory {
      */
     public StateArray createStateArray() {
         return new StateArray();
+    }
+
+    /**
+     * Create an instance of {@link State }
+     * 
+     */
+    public State createState() {
+        return new State();
     }
 
 }

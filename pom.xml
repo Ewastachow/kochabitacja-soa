@@ -37,6 +37,7 @@
         <module>kochabitacja-SOA-web</module>
         <module>kochabitacja-SOA-ear</module>
         <module>kochabitacja-SOA-SOAPClient</module>
+        <module>kochabitacja-SOA-RESTClient</module>
     </modules>
 
     <properties>

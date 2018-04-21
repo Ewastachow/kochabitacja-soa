@@ -30,7 +30,6 @@ import javax.annotation.security.PermitAll;
 public class ServerSOAP {
 
     @WebMethod
-    @PermitAll
     @WebResult(name = "hello_message")
     public String hello(@WebParam(name = "toHello") String s){
         return "Hello "+s;
