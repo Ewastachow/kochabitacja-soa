@@ -1,25 +1,28 @@
 package rest_client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import rest_client.consumer.AutomaConsumer;
+import rest_client.consumer.HelloConsumer;
 import rest_client.model.Automa;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+import java.io.IOException;
 
 public class KochabitacjaRestClient {
 
     public static void main(String[] args) {
-        Client client = ClientBuilder.newClient();
-
-        HelloConsumer helloConsumer = new HelloConsumer(client);
-        System.out.println(helloConsumer.getHello());
-
-        AutomaConsumer automaConsumer = new AutomaConsumer(client);
-        System.out.println("GET all:  " + automaConsumer.getAutomats());
-        System.out.println("GET    :  " + automaConsumer.getAutomataById(3));
-        System.out.println("POST   :  " + automaConsumer.postAutomata(new Automa()));
-        System.out.println("DELETE :  " + automaConsumer.deleteAutomata(4));
-        System.out.println("PUT    :  " + automaConsumer.putAutomata(new Automa(),3));
-
-
+        System.out.println(HelloConsumer.getHello());
+        try {
+            System.out.println("GET all:  " + AutomaConsumer.getAutomats());
+            System.out.println("GET    :  " + AutomaConsumer.getAutomataById(3));
+            System.out.println("POST   :  " + AutomaConsumer.postAutomata(new Automa()));
+            System.out.println("PUT    :  " + AutomaConsumer.putAutomata(new Automa(),3));
+            System.out.println("DELETE :  " + AutomaConsumer.deleteAutomata(4));
+        } catch (JsonProcessingException e) {
+            System.out.println("There was a problem with mapping to Json");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("There was a problem with mapping from Json");
+            e.printStackTrace();
+        }
     }
 }
