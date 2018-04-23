@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 public class AutomaConsumer {
@@ -24,6 +25,7 @@ public class AutomaConsumer {
         Response response = client
                 .target(target)
                 .request()
+                .header("Authorization", getAuthorizationHeader("lama", "alpaka"))
                 .get();
         return Arrays.asList(
                 new ObjectMapper()
@@ -77,8 +79,13 @@ public class AutomaConsumer {
                 .path("3/avatar")
                 .request().get();
         byte[] imageBytes = response.readEntity(byte[].class);
-        Files.write(Paths.get("C:\\Users\\yevvy\\Documents\\Projects\\SOA\\KochabitacjaSOA\\kochabitacja-SOA-RESTClient\\src\\main\\resources\\ap.jpg"),imageBytes);
+        Files.write(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-RESTClient\\src\\main\\resources\\rest_client\\lama.jpg"),imageBytes);
         return response.getStatus();
+    }
+
+    private static String getAuthorizationHeader(String username, String password) {
+        String usernamePassword = username + ":" + password;
+        return "Basic " + Base64.getEncoder().encodeToString(usernamePassword.getBytes());
     }
 
 }

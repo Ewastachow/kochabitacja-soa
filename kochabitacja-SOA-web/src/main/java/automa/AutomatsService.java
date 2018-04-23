@@ -23,7 +23,7 @@ public class AutomatsService {
      * http://localhost:8080/kochabitacja-SOA-web
      */
     @GET
-    @RolesAllowed("user")
+    @RolesAllowed("TestRole")
     @Produces("application/json")
     public List<Automa> get(){
         List<Automa> automats = new ArrayList<>();
@@ -70,7 +70,7 @@ public class AutomatsService {
     public Response avatar() {
         try {
             //TODO podmienic link o zdjecia
-            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\Documents\\Projects\\SOA\\KochabitacjaSOA\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
+            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
             return Response.status(200).entity(image).build();
         } catch (IOException e) {
             return Response.status(500).build();
