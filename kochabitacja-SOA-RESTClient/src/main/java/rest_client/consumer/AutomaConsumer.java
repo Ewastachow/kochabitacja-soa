@@ -10,6 +10,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,6 +67,17 @@ public class AutomaConsumer {
                 .path(String.valueOf(id))
                 .request()
                 .delete();
+        return response.getStatus();
+    }
+
+    public static int saveAvatar() throws IOException {
+        Client client = ClientBuilder.newClient();
+        Response response = client
+                .target(target)
+                .path("3/avatar")
+                .request().get();
+        byte[] imageBytes = response.readEntity(byte[].class);
+        Files.write(Paths.get("C:\\Users\\yevvy\\Documents\\Projects\\SOA\\KochabitacjaSOA\\kochabitacja-SOA-RESTClient\\src\\main\\resources\\ap.jpg"),imageBytes);
         return response.getStatus();
     }
 

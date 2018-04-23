@@ -9,14 +9,15 @@ import java.io.IOException;
 
 public class KochabitacjaRestClient {
 
-    public static void main(String[] args) {
-        System.out.println(HelloConsumer.getHello());
+        public static void main(String[] args) {
         try {
-            System.out.println("GET all:  " + AutomaConsumer.getAutomats());
-            System.out.println("GET    :  " + AutomaConsumer.getAutomataById(3));
-            System.out.println("POST   :  " + AutomaConsumer.postAutomata(new Automa()));
-            System.out.println("PUT    :  " + AutomaConsumer.putAutomata(new Automa(),3));
-            System.out.println("DELETE :  " + AutomaConsumer.deleteAutomata(4));
+            System.out.println("GET XML    :  " + HelloConsumer.getHello());
+            System.out.println("GET all    :  " + AutomaConsumer.getAutomats());
+            System.out.println("GET        :  " + AutomaConsumer.getAutomataById(3));
+            System.out.println("POST       :  " + AutomaConsumer.postAutomata(new Automa()));
+            System.out.println("PUT        :  " + AutomaConsumer.putAutomata(new Automa(),3));
+            System.out.println("DELETE     :  " + AutomaConsumer.deleteAutomata(4));
+            System.out.println("GET FILE   :  " + AutomaConsumer.saveAvatar());
         } catch (JsonProcessingException e) {
             System.out.println("There was a problem with mapping to Json");
             e.printStackTrace();

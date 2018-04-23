@@ -23,6 +23,7 @@ public class AutomatsService {
      * http://localhost:8080/kochabitacja-SOA-web
      */
     @GET
+    @RolesAllowed("user")
     @Produces("application/json")
     public List<Automa> get(){
         List<Automa> automats = new ArrayList<>();
