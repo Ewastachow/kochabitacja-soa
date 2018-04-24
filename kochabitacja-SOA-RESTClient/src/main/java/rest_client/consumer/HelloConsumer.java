@@ -7,7 +7,7 @@ public class HelloConsumer {
     public static String getHello(){
         return ClientBuilder
                 .newClient()
-                .target("http://localhost:8080/kochabitacja-SOA-web/HelloWorld")
+                .target("http://localhost:8080/HelloWorld")
                 .path("hello")
                 .request()
                 .get()

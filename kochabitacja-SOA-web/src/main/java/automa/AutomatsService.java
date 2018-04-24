@@ -4,6 +4,7 @@ import automa.model.Automa;
 import automa.model.State;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -23,17 +24,18 @@ public class AutomatsService {
      * http://localhost:8080/kochabitacja-SOA-web
      */
     @GET
-    @RolesAllowed("TestRole")
     @Produces("application/json")
-    public List<Automa> get(){
+    public List<Automa> get(@QueryParam("name") String name){
+        String newName = name==null || name=="" ? "Lamaaa" : name;
         List<Automa> automats = new ArrayList<>();
         automats.add(new Automa("Lama", Arrays.asList(new State("alpaka"), new State("lama"))));
         automats.add(new Automa("Wierza", Arrays.asList(new State("pilka"))));
-        automats.add(new Automa("Combo", Arrays.asList(new State("alpaka"), new State("mewa"), new State("piorun"))));
+        automats.add(new Automa(newName, Arrays.asList(new State("alpaka"), new State("mewa"), new State("piorun"))));
         return automats;
     }
 
     @GET
+    @RolesAllowed("TestRole")
     @Produces("application/json")
     @Path("{id}")
     public Response getById(@PathParam("id") int id) {
@@ -45,7 +47,7 @@ public class AutomatsService {
 
     @POST
     @Consumes("application/json")
-    public Response post(@NotNull Automa automa) {
+    public Response post(@NotNull @Valid Automa automa) {
         System.out.println("Adding automa: " + automa);
         Automa newAutoma = automa;
         return Response.status(201).build();

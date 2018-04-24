@@ -18,7 +18,8 @@ import java.util.List;
 
 public class AutomaConsumer {
 
-    private static final String target = "http://localhost:8080/kochabitacja-SOA-web/automats";
+//    private static final String target = "http://localhost:8080/kochabitacja-SOA-web/automats";
+    private static final String target = "http://localhost:8080/automats";
 
     public static List<Automa> getAutomats() throws IOException {
         Client client = ClientBuilder.newClient();
@@ -38,6 +39,7 @@ public class AutomaConsumer {
                 .target(target)
                 .path(String.valueOf(id))
                 .request()
+                .header("Authorization", getAuthorizationHeader("lama", "alpaka"))
                 .get();
         return new ObjectMapper()
                 .readValue(response.readEntity(String.class), Automa.class);

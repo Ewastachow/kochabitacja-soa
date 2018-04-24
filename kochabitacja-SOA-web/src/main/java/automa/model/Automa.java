@@ -2,11 +2,13 @@ package automa.model;
 
 import automa.model.State;
 
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Automa {
 
+    @Size(min = 3)
     private String name;
     private List<automa.model.State> states;
 
