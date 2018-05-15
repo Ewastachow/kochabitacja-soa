@@ -28,8 +28,11 @@
       <jta-data-source>java:jboss/datasources/kochabitacja-SOADS</jta-data-source>
       <properties>
          <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-         <property name="hibernate.show_sql" value="false" />
+
+         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysqldb" />
+         <property name="javax.persistence.jdbc.user" value="yevv" />
+         <property name="javax.persistence.jdbc.password" value="7878" />
       </properties>
    </persistence-unit>
 </persistence>
