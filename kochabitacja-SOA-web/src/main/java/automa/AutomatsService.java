@@ -28,14 +28,14 @@ public class AutomatsService {
 
     @GET
     @Produces("application/json")
-    @RolesAllowed("user")
+//    @RolesAllowed("user")
     public List<Automa> get() {
         return studentRepo.geAllAutomatasList();
     }
 
     @GET
     @Produces("application/json")
-    @RolesAllowed("user")
+//    @RolesAllowed("user")
     @Path("{id}")
     public Response getById(@PathParam("id") int id) {
         Automa s = studentRepo.getOneStudent(id);
