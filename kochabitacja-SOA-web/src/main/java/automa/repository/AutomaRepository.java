@@ -16,6 +16,7 @@ import java.util.List;
 
 @Singleton
 public class AutomaRepository implements Serializable {
+
     @PersistenceContext(unitName = "MySqlDS")
     private EntityManager entityManager;
 
@@ -60,8 +61,8 @@ public class AutomaRepository implements Serializable {
         }
     }
 
-    public void addStudent(@NotNull String lastName) {
-        Automa s = new Automa(lastName);
-        entityManager.persist(s);
+    public void addStudent(@NotNull Automa automa) {
+        System.out.println("Lama ----- "+automa);
+        entityManager.persist(automa);
     }
 }

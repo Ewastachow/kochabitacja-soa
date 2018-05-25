@@ -3,6 +3,7 @@ package automa.repository;
 import automa.model.Automa;
 import automa.model.State;
 
+import javax.annotation.Resource;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -21,7 +22,7 @@ public class StateRepository implements Serializable {
     @PersistenceContext(unitName = "MySqlDS")
     private EntityManager entityManager;
 
-    public void createImage(@NotNull String name, Automa automa){
+    public void createState(@NotNull String name, Automa automa){
         State i = new State(name, automa);
         entityManager.persist(i);
     }
@@ -47,7 +48,7 @@ public class StateRepository implements Serializable {
         }
     }
 
-    public boolean updateStudent(int id, State newState) {
+    public boolean updateState(int id, State newState) {
         State s = readState(id);
         if (s == null) return false;
         s.setStateName(newState.getStateName());
@@ -56,7 +57,7 @@ public class StateRepository implements Serializable {
         return true;
     }
 
-    public boolean deleteImage(int id){
+    public boolean deleteState(int id){
         try {
             entityManager.remove(readState(id));
             return true;
@@ -64,6 +65,4 @@ public class StateRepository implements Serializable {
             return false;
         }
     }
-
-
 }

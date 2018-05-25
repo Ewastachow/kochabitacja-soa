@@ -23,7 +23,7 @@ public class Automa {
     public static final String AUTOMA_BY_ID = "automa_by_id";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull

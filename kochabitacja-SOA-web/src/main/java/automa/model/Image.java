@@ -14,7 +14,7 @@ public class Image {
     public static final String IMAGE_BY_ID = "image_by_id";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     @NotNull

@@ -3,8 +3,10 @@ package automa;
 import automa.model.Automa;
 import automa.model.State;
 import automa.repository.AutomaRepository;
+import automa.repository.StateRepository;
 
 import javax.ejb.EJBException;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -21,10 +23,13 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
 @Path("/automats")
+@Stateless
 public class AutomatsService {
 
     @Inject
     private AutomaRepository studentRepo;
+    @Inject
+    private StateRepository stateRepo;
 
     @GET
     @Produces("application/json")
@@ -55,22 +60,37 @@ public class AutomatsService {
         return Response.status(200).entity(s.getStates()).build();
     }
 
-//    @POST
-//    @Consumes("application/json")
+    @POST
+    @Consumes("application/json")
 //    @RolesAllowed("user")
-//    public Response post(@NotNull Automa student) {
-//        try {
-//            System.out.println("Adding student: " + student);
-//            studentRepo.addStudent(student.getName());
-//            System.out.println("Student list: " + studentRepo.geAllAutomatasList());
-//
-//            return Response.status(204).build();
-//        } catch (EJBException e) {
-//            if (e.getCause() instanceof ConstraintViolationException)
-//                return Response.status(400).build();
-//            throw e;
-//        }
-//    }
+    public Response postAutoma(@NotNull @Valid Automa student) {
+        System.out.println(student);
+        try {
+            System.out.println("Adding student: " + student);
+            studentRepo.addStudent(student);
+            System.out.println("Student list: " + studentRepo.getAllAutomatasList());
+            return Response.status(201).build();
+        } catch (EJBException e) {
+            if (e.getCause() instanceof ConstraintViolationException)
+                return Response.status(400).build();
+            throw e;
+        }
+    }
+
+    @POST
+    @Path("{id}/states")
+    @Consumes("application/json")
+//    @RolesAllowed("user")
+    public Response postStateToAutoma(@PathParam("id") int id, @NotNull @Valid State state) {
+        try {
+            stateRepo.createState(state.getStateName(),studentRepo.getOneStudent(id));
+            return Response.status(204).build();
+        } catch (EJBException e) {
+            if (e.getCause() instanceof ConstraintViolationException)
+                return Response.status(400).build();
+            throw e;
+        }
+    }
 //
 //    @PUT
 //    @Path("{id}")
@@ -126,38 +146,38 @@ public class AutomatsService {
 //        return Response.status(200).entity(automa).build();
 //    }
 
-    @POST
-    @Consumes("application/json")
-    public Response post(@NotNull @Valid Automa automa) {
-//        System.out.println("Adding automa: " + automa);
-//        Automa newAutoma = automa;
-        return Response.status(201).build();
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes("application/json")
-    public Response put(@NotNull Automa automa) {
-        return Response.status(201).build();
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response delete() {
-        return Response.status(204).build();
-    }
-
-    @GET
-    @Path("{id}/avatar")
-    @Produces("image/png")
-    public Response avatar() {
-        try {
-            //TODO podmienic link o zdjecia
-            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
-            return Response.status(200).entity(image).build();
-        } catch (IOException e) {
-            return Response.status(500).build();
-        }
-    }
+//    @POST
+//    @Consumes("application/json")
+//    public Response post(@NotNull @Valid Automa automa) {
+////        System.out.println("Adding automa: " + automa);
+////        Automa newAutoma = automa;
+//        return Response.status(201).build();
+//    }
+//
+//    @PUT
+//    @Path("{id}")
+//    @Consumes("application/json")
+//    public Response put(@NotNull Automa automa) {
+//        return Response.status(201).build();
+//    }
+//
+//    @DELETE
+//    @Path("{id}")
+//    public Response delete() {
+//        return Response.status(204).build();
+//    }
+//
+//    @GET
+//    @Path("{id}/avatar")
+//    @Produces("image/png")
+//    public Response avatar() {
+//        try {
+//            //TODO podmienic link o zdjecia
+//            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
+//            return Response.status(200).entity(image).build();
+//        } catch (IOException e) {
+//            return Response.status(500).build();
+//        }
+//    }
 
 }
