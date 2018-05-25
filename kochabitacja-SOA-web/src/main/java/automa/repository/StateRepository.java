@@ -1,6 +1,7 @@
 package automa.repository;
 
-import automa.model.Image;
+import automa.model.Automa;
+import automa.model.State;
 
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
@@ -15,52 +16,54 @@ import java.io.Serializable;
 import java.util.List;
 
 @Singleton
-public class ImageRepository implements Serializable {
+public class StateRepository implements Serializable {
 
     @PersistenceContext(unitName = "MySqlDS")
     private EntityManager entityManager;
 
-    public List<Image> readAllImages(){
+    public void createImage(@NotNull String name, Automa automa){
+        State i = new State(name, automa);
+        entityManager.persist(i);
+    }
+
+    public List<State> readAllStates(){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Image> cq = cb.createQuery(Image.class);
-        Root<Image> rootEntry = cq.from(Image.class);
-        CriteriaQuery<Image> all = cq.select(rootEntry);
-        TypedQuery<Image> allQuery = entityManager.createQuery(all);
+        CriteriaQuery<State> cq = cb.createQuery(State.class);
+        Root<State> rootEntry = cq.from(State.class);
+        CriteriaQuery<State> all = cq.select(rootEntry);
+        TypedQuery<State> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
 
-    public Image readImage(int id){
+    public State readState(int id){
         try {
             Object o = entityManager
-                    .createNamedQuery(Image.IMAGE_BY_ID, Image.class)
+                    .createNamedQuery(State.STATE_BY_ID, State.class)
                     .setParameter("id", id)
                     .getSingleResult();
-            return (Image) o;
+            return (State) o;
         } catch (NoResultException e) {
             return null;
         }
     }
 
-    public void createImage(@NotNull String name, @NotNull byte[] source){
-        Image i = new Image(name, source);
-        entityManager.persist(i);
-    }
-
-    public boolean updateStudent(int id, Image newImage) {
-        Image s = readImage(id);
+    public boolean updateStudent(int id, State newState) {
+        State s = readState(id);
         if (s == null) return false;
-        s.setName(newImage.getName());
-        s.setSource(newImage.getSource());
+        s.setStateName(newState.getStateName());
+        s.setAutoma(newState.getAutoma());
         entityManager.persist(s);
         return true;
     }
 
     public boolean deleteImage(int id){
         try {
-            entityManager.remove(readImage(id));
+            entityManager.remove(readState(id));
             return true;
         } catch (NoResultException e) {
             return false;
         }
     }
+
+
 }

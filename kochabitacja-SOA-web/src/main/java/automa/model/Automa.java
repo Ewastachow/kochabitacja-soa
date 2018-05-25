@@ -30,28 +30,20 @@ public class Automa {
     @Size(min = 3)
     private String name;
 
-//    @OneToMany
-//    @JoinColumn(name = "automa_id")
-//    private List<State> states;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "automa", cascade = CascadeType.ALL)
+    private List<State> states;
 
     public Automa() {
-        this.name = "DefaultName";
-//        this.states = new ArrayList<>();
-//        states.add(new automa.model.State());
-//        states.add(new automa.model.State());
     }
 
     public Automa(String name) {
         this.name = name;
-//        this.states = new ArrayList<>();
-//        states.add(new automa.model.State("DefState1"));
-//        states.add(new automa.model.State("DefState2"));
     }
 
-//    public Automa(String name, List<automa.model.State> states) {
-//        this.name = name;
-////        this.states = states;
-//    }
+    public Automa(String name, List<automa.model.State> states) {
+        this.name = name;
+//        this.states = states;
+    }
 
     public String getName() {
         return name;
@@ -61,13 +53,13 @@ public class Automa {
         this.name = name;
     }
 
-//    public List<automa.model.State> getStates() {
-//        return states;
-//    }
-//
-//    public void setStates(List<State> states) {
-//        this.states = states;
-//    }
+    public List<automa.model.State> getStates() {
+        return states;
+    }
+
+    public void setStates(List<State> states) {
+        this.states = states;
+    }
 
     @Override
     public String toString() {

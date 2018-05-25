@@ -29,7 +29,7 @@ public class AutomaRepository implements Serializable {
 
 
 
-    public List<Automa> geAllAutomatasList() {
+    public List<Automa> getAllAutomatasList() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Automa> cq = cb.createQuery(Automa.class);
         Root<Automa> rootEntry = cq.from(Automa.class);
@@ -58,7 +58,6 @@ public class AutomaRepository implements Serializable {
         } catch (NoResultException e) {
             return null;
         }
-
     }
 
     public void addStudent(@NotNull String lastName) {

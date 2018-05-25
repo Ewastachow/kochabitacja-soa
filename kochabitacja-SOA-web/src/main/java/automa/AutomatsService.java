@@ -29,20 +29,30 @@ public class AutomatsService {
     @GET
     @Produces("application/json")
 //    @RolesAllowed("user")
-    public List<Automa> get() {
-        return studentRepo.geAllAutomatasList();
+    public Response getAutomats() {
+        List<Automa> a = studentRepo.getAllAutomatasList();
+        if (a == null)  return Response.status(404).build();
+        return Response.status(200).entity(a).build();
     }
 
     @GET
     @Produces("application/json")
 //    @RolesAllowed("user")
     @Path("{id}")
-    public Response getById(@PathParam("id") int id) {
+    public Response getAutomaById(@PathParam("id") int id) {
         Automa s = studentRepo.getOneStudent(id);
-        if (s == null)
-            return Response.status(404).build();
-
+        if (s == null) return Response.status(404).build();
         return Response.status(200).entity(s).build();
+    }
+
+    @GET
+    @Produces("application/json")
+//    @RolesAllowed("user")
+    @Path("{id}/states")
+    public Response getAutomaStatesByAutomaId(@PathParam("id") int id) {
+        Automa s = studentRepo.getOneStudent(id);
+        if (s == null) return Response.status(404).build();
+        return Response.status(200).entity(s.getStates()).build();
     }
 
 //    @POST

@@ -1,30 +1,34 @@
 package automa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-//@Entity
-//@NamedQueries({@NamedQuery(name = State.STATE_BY_ID, query = "SELECT s from State s where s.id = :id")})
+@Entity
+@NamedQueries({@NamedQuery(name = State.STATE_BY_ID, query = "SELECT s from State s where s.id = :id")})
 public class State {
 
-//    public static final String STATE_BY_ID = "state_by_id";
-//
-//    @Id
-//    @GeneratedValue
+    public static final String STATE_BY_ID = "state_by_id";
+
+    @Id
+    @GeneratedValue
     private int id;
 
-//    @NotNull
+    @NotNull
     private String stateName;
 
-//    @NotNull
-    private int automaId;
+    @ManyToOne
+    @JoinColumn(name="automa_id", nullable = false)
+    @JsonIgnore
+    private Automa automa;
 
     public State() {
-        stateName = "DefaultStateName";
     }
 
-    public State(String stateName) {
+    public State(String stateName, Automa automa) {
         this.stateName = stateName;
+        this.automa = automa;
     }
 
     public String getStateName() {
@@ -43,12 +47,12 @@ public class State {
         this.id = id;
     }
 
-    public int getAutomaId() {
-        return automaId;
+    public Automa getAutoma() {
+        return automa;
     }
 
-    public void setAutomaId(int automaId) {
-        this.automaId = automaId;
+    public void setAutoma(Automa automa) {
+        this.automa = automa;
     }
 
     @Override
