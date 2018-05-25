@@ -57,9 +57,13 @@ public class StateRepository implements Serializable {
         return true;
     }
 
-    public boolean deleteState(int id){
+    public boolean deleteState(int id, Automa automa){
         try {
-            entityManager.remove(readState(id));
+            System.out.println("id   srsly???    "+id);
+            State s = readState(id);
+            s.setAutoma(automa);
+            System.out.println("srsly???   "+s);
+            entityManager.remove(s);
             return true;
         } catch (NoResultException e) {
             return false;

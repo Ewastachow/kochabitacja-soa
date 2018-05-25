@@ -89,21 +89,39 @@ public class AutomatsService {
         }
     }
 //
-//    @PUT
-//    @Path("{id}")
-//    @Consumes("application/json")
+    @PUT
+    @Path("{id}")
+    @Consumes("application/json")
 //    @RolesAllowed("user")
-//    public Response put(@PathParam("id") int id, Student student) {
-//        boolean found = studentRepo.updateStudent(id, student);
-//        return found ? Response.status(204).build() : Response.status(404).build();
-//    }
+    public Response putAutoma(@PathParam("id") int id, @NotNull @Valid Automa student) {
+        boolean found = studentRepo.updateAutoma(id, student);
+        return found ? Response.status(201).build() : Response.status(404).build();
+    }
+    //
+
+    @PUT
+    @Path("{idAutoma}/states/{idState}")
+    @Consumes("application/json")
+//    @RolesAllowed("user")
+    public Response putState(@PathParam("idState") int id, @NotNull @Valid State state) {
+        boolean found = stateRepo.updateState(id, state);
+        return found ? Response.status(201).build() : Response.status(404).build();
+    }
 //
-//    @DELETE
-//    @Path("{id}")
+    @DELETE
+    @Path("{id}")
 //    @RolesAllowed("user")
-//    public Response delete(@PathParam("id") int id) {
-//        return Response.status(studentRepo.deleteStudent(id) ? 204 : 404).build();
-//    }
+    public Response deleteAutoma(@PathParam("id") int id) {
+        return Response.status(studentRepo.deleteStudent(id) ? 204 : 404).build();
+    }
+
+    @DELETE
+    @Path("{idAutoma}/states/{idState}")
+//    @RolesAllowed("user")
+    public Response deleteState(@PathParam("idState") int idState,@PathParam("idAutoma") int idAutoma) {
+        System.out.println("asdasdasdasdasdasdasdas");
+        return Response.status(stateRepo.deleteState(idState, studentRepo.getOneStudent(idAutoma)) ? 204 : 404).build();
+    }
 //
 //    @GET
 //    @Path("{id}/book")
