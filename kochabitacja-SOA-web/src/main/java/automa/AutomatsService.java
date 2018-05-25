@@ -64,11 +64,8 @@ public class AutomatsService {
     @Consumes("application/json")
 //    @RolesAllowed("user")
     public Response postAutoma(@NotNull @Valid Automa student) {
-        System.out.println(student);
         try {
-            System.out.println("Adding student: " + student);
             studentRepo.addStudent(student);
-            System.out.println("Student list: " + studentRepo.getAllAutomatasList());
             return Response.status(201).build();
         } catch (EJBException e) {
             if (e.getCause() instanceof ConstraintViolationException)
@@ -83,8 +80,8 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     public Response postStateToAutoma(@PathParam("id") int id, @NotNull @Valid State state) {
         try {
-            stateRepo.createState(state.getStateName(),studentRepo.getOneStudent(id));
-            return Response.status(204).build();
+            stateRepo.createState(state,studentRepo.getOneStudent(id));
+            return Response.status(201).build();
         } catch (EJBException e) {
             if (e.getCause() instanceof ConstraintViolationException)
                 return Response.status(400).build();

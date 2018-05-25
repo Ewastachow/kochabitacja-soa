@@ -22,9 +22,9 @@ public class StateRepository implements Serializable {
     @PersistenceContext(unitName = "MySqlDS")
     private EntityManager entityManager;
 
-    public void createState(@NotNull String name, Automa automa){
-        State i = new State(name, automa);
-        entityManager.persist(i);
+    public void createState(@NotNull State state, Automa automa){
+        state.setAutoma(automa);
+        entityManager.persist(state);
     }
 
     public List<State> readAllStates(){
