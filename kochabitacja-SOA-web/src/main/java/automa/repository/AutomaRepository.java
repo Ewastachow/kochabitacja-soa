@@ -62,7 +62,6 @@ public class AutomaRepository implements Serializable {
     }
 
     public void addStudent(@NotNull Automa automa) {
-        System.out.println("Lama ----- "+automa);
         entityManager.persist(automa);
     }
 }

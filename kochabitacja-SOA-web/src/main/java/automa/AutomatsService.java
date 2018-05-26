@@ -12,6 +12,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,8 +20,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.core.UriInfo;
 
 @Path("/automats")
 @Stateless
@@ -34,8 +37,27 @@ public class AutomatsService {
     @GET
     @Produces("application/json")
 //    @RolesAllowed("user")
-    public Response getAutomats() {
+    public Response getAutomats(@Context UriInfo info) {
+
+        final String nameFilter = info.getQueryParameters().getFirst("name");
+        String minStatesFilter = info.getQueryParameters().getFirst("minStatesAmong");
+        String maxStatesFilter = info.getQueryParameters().getFirst("maxStatesAmong");
+
         List<Automa> a = studentRepo.getAllAutomatasList();
+
+        a = nameFilter==null ? a :
+                a.stream()
+                        .filter(automa -> automa.getName().contains(nameFilter))
+                        .collect(Collectors.toList());
+        a = minStatesFilter==null ? a :
+                a.stream()
+                        .filter(automa -> automa.getStates().size()>=Integer.parseInt(minStatesFilter))
+                        .collect(Collectors.toList());
+        a = maxStatesFilter==null ? a :
+                a.stream()
+                        .filter(automa -> automa.getStates().size()<=Integer.parseInt(maxStatesFilter))
+                        .collect(Collectors.toList());
+
         if (a == null)  return Response.status(404).build();
         return Response.status(200).entity(a).build();
     }
