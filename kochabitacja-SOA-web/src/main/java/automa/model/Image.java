@@ -1,5 +1,6 @@
 package automa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.ejb.Stateless;
 import javax.persistence.*;
@@ -14,13 +15,16 @@ public class Image {
     public static final String IMAGE_BY_ID = "image_by_id";
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
     private String name;
 
     @NotNull
+//    @Column(ty = "PERSON_ID")
+//    @Lob(type = LobType.BLOB)
+    @JsonIgnore
     private byte[] source;
 
     public Image() {

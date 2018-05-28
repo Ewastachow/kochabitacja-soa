@@ -24,6 +24,7 @@ public class AutomaRepository implements Serializable {
         Automa s = getOneStudent(id);
         if (s == null) return false;
         s.setName(newStudent.getName());
+//        s.setStates(newStudent.getStates());
         entityManager.persist(s);
         return true;
     }

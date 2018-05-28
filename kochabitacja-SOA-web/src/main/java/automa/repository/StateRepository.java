@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
 public class StateRepository implements Serializable {
@@ -63,7 +64,9 @@ public class StateRepository implements Serializable {
             State s = readState(id);
             s.setAutoma(automa);
             System.out.println("srsly???   "+s);
-            entityManager.remove(s);
+            automa.setStates(automa.getStates().stream().filter(e -> e.getId()!=id).collect(Collectors.toList()));
+//            entityManager.remove(s);
+            entityManager.persist(automa);
             return true;
         } catch (NoResultException e) {
             return false;
