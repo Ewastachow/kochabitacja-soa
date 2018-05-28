@@ -36,7 +36,7 @@ public class AutomatsService {
         String minStatesFilter = info.getQueryParameters().getFirst("minStatesAmong");
         String maxStatesFilter = info.getQueryParameters().getFirst("maxStatesAmong");
 
-        List<Automa> a = studentRepo.getAllAuutomatas();
+        List<Automa> a = studentRepo.getAllAuutomatas(nameFilter, minStatesFilter, maxStatesFilter);
 
         a = nameFilter==null ? a :
                 a.stream()
@@ -134,80 +134,6 @@ public class AutomatsService {
     @Path("{idAutoma}/states/{idState}")
 //    @RolesAllowed("user")
     public Response deleteState(@PathParam("idState") int idState,@PathParam("idAutoma") int idAutoma) {
-        System.out.println("asdasdasdasdasdasdasdas");
         return Response.status(stateRepo.deleteState(idState, studentRepo.getAutoma(idAutoma)) ? 204 : 404).build();
     }
-//
-//    @GET
-//    @Path("{id}/book")
-//    @Produces("application/pdf")
-//    @PermitAll
-//    public Response avatar() {
-//        try {
-//            byte[] image = Files.readAllBytes(Paths.get("/home/marcin/IdeaProjects/soa123/whyfp90.pdf"));
-//            return Response.status(200).entity(image).build();
-//        } catch (IOException e) {
-//            return Response.status(500).build();
-//        }
-//    }
-
-//    /**
-//     * http://localhost:8080/kochabitacja-SOA-web
-//     */
-//    @GET
-//    @Produces("application/json")
-//    public List<Automa> get(@QueryParam("name") String name){
-//        String newName = name==null || name=="" ? "Lamaaa" : name;
-//        List<Automa> automats = new ArrayList<>();
-//        automats.add(new Automa("Lama", Arrays.asList(new State("alpaka"), new State("lama"))));
-//        automats.add(new Automa("Wierza", Arrays.asList(new State("pilka"))));
-//        automats.add(new Automa(newName, Arrays.asList(new State("alpaka"), new State("mewa"), new State("piorun"))));
-//        return automats;
-//    }
-
-//    @GET
-//    @RolesAllowed("TestRole")
-//    @Produces("application/json")
-//    @Path("{id}")
-//    public Response getById(@PathParam("id") int id) {
-//        Automa automa = new Automa("Lama"+id, Arrays.asList(new State("alpaka"), new State("lama")));
-//        if (id>200)
-//            return Response.status(404).build();
-//        return Response.status(200).entity(automa).build();
-//    }
-
-//    @POST
-//    @Consumes("application/json")
-//    public Response post(@NotNull @Valid Automa automa) {
-////        System.out.println("Adding automa: " + automa);
-////        Automa newAutoma = automa;
-//        return Response.status(201).build();
-//    }
-//
-//    @PUT
-//    @Path("{id}")
-//    @Consumes("application/json")
-//    public Response put(@NotNull Automa automa) {
-//        return Response.status(201).build();
-//    }
-//
-//    @DELETE
-//    @Path("{id}")
-//    public Response delete() {
-//        return Response.status(204).build();
-//    }
-//
-//    @GET
-//    @Path("{id}/avatar")
-//    @Produces("image/png")
-//    public Response avatar() {
-//        try {
-//            //TODO podmienic link o zdjecia
-//            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
-//            return Response.status(200).entity(image).build();
-//        } catch (IOException e) {
-//            return Response.status(500).build();
-//        }
-//    }
-
 }

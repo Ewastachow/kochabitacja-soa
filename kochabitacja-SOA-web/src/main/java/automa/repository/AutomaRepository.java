@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -53,11 +54,19 @@ public class AutomaRepository implements Serializable {
 
 
 
-    public List<Automa> getAllAuutomatas() {
+    public List<Automa> getAllAuutomatas(String nameFilter, String minStatesFilter, String maxStatesFilter) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Automa> cq = cb.createQuery(Automa.class);
         Root<Automa> rootEntry = cq.from(Automa.class);
         CriteriaQuery<Automa> all = cq.select(rootEntry);
+//        ParameterExpression<String> nameF = cb.parameter(String.class);
+//        ParameterExpression<Integer> minF = cb.parameter(Integer.class);
+//        ParameterExpression<Integer> maxF = cb.parameter(Integer.class);
+//        CriteriaQuery<Automa> name = all.where(
+//                cb.equal(rootEntry.get("name"), nameF),
+//                cb.gt(rootEntry.get("name"), minF),
+//
+//        );
         TypedQuery<Automa> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
