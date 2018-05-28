@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
 public class AutomaRepository implements Serializable {
@@ -22,17 +23,31 @@ public class AutomaRepository implements Serializable {
     private EntityManager entityManager;
 
     public boolean updateAutoma(int id, Automa newAutoma) {
-        Automa automa = getAutoma(id);
-        if (automa == null) return false;
-        automa.setName(newAutoma.getName());
-        automa.setStates(newAutoma.getStates());
-        entityManager.persist(automa);
-        if(automa.getStates()!=null)
-            newAutoma.getStates().forEach(state -> {
-                state.setAutoma(automa);
+        Automa oldAutoma = getAutoma(id);
+//        List<State> newStates = newAutoma.getStates();
+//        List<State> oldStates = oldAutoma.getStates();
+        List<State> statesToRemove = oldAutoma.getStates().stream()
+                .filter(state -> newAutoma.getStates().stream()
+                        .noneMatch(s2 -> s2.getStateName().equals(state.getStateName())))
+                .collect(Collectors.toList());
+        List<State> statesToAdd = newAutoma.getStates().stream()
+                .filter(state -> oldAutoma.getStates().stream()
+                        .noneMatch(s2 -> s2.getStateName().equals(state.getStateName())))
+                .collect(Collectors.toList());
+        if (oldAutoma == null) return false;
+        if(statesToRemove!=null)
+            statesToRemove.forEach(state -> {
+                state.setAutoma(oldAutoma);
+                entityManager.remove(state);
+            });
+        oldAutoma.setName(newAutoma.getName());
+        oldAutoma.setStates(null);
+        entityManager.persist(oldAutoma);
+        if(statesToAdd!=null)
+            statesToAdd.forEach(state -> {
+                state.setAutoma(oldAutoma);
                 entityManager.persist(state);
             });
-//        s.setStates(newStudent.getStates());
         return true;
     }
 

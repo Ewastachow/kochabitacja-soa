@@ -28,14 +28,14 @@ public class StateRepository implements Serializable {
         entityManager.persist(state);
     }
 
-    public List<State> readAllStates(){
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<State> cq = cb.createQuery(State.class);
-        Root<State> rootEntry = cq.from(State.class);
-        CriteriaQuery<State> all = cq.select(rootEntry);
-        TypedQuery<State> allQuery = entityManager.createQuery(all);
-        return allQuery.getResultList();
-    }
+//    public List<State> readAllStates(){
+//        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<State> cq = cb.createQuery(State.class);
+//        Root<State> rootEntry = cq.from(State.class);
+//        CriteriaQuery<State> all = cq.select(rootEntry);
+//        TypedQuery<State> allQuery = entityManager.createQuery(all);
+//        return allQuery.getResultList();
+//    }
 
     public State readState(int id){
         try {
@@ -60,13 +60,12 @@ public class StateRepository implements Serializable {
 
     public boolean deleteState(int id, Automa automa){
         try {
-            System.out.println("id   srsly???    "+id);
-            State s = readState(id);
-            s.setAutoma(automa);
-            System.out.println("srsly???   "+s);
-            automa.setStates(automa.getStates().stream().filter(e -> e.getId()!=id).collect(Collectors.toList()));
-//            entityManager.remove(s);
+            State stateToDelete = readState(id);
+            stateToDelete.setAutoma(automa);
+//            List<State> restStates = automa.getStates().stream().filter(e -> e.getId()!=id).collect(Collectors.toList());
+            automa.setStates(null);
             entityManager.persist(automa);
+            entityManager.remove(stateToDelete);
             return true;
         } catch (NoResultException e) {
             return false;
