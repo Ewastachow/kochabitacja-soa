@@ -24,6 +24,7 @@ public class Image {
     @NotNull
 //    @Column(ty = "PERSON_ID")
 //    @Lob(type = LobType.BLOB)
+    @Lob
     @JsonIgnore
     private byte[] source;
 

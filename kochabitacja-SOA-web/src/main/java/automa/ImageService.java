@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,6 +62,18 @@ public class ImageService {
             imageRepo.createImage(image.getName(),image.getSource());
 //            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
             return Response.status(200).build();
+//        } catch (IOException e) {
+//            return Response.status(500).build();
+//        }
+    }
+
+    @POST
+    @Consumes
+    public Response postImageSource(byte[] image) {
+//        try {
+        imageRepo.createImage("new_image",image);
+//            byte[] image = Files.readAllBytes(Paths.get("C:\\Users\\yevvy\\IdeaProjects\\kochabitacja-soa\\kochabitacja-SOA-web\\src\\main\\resources\\automa\\lama.jpg"));
+        return Response.status(200).build();
 //        } catch (IOException e) {
 //            return Response.status(500).build();
 //        }
