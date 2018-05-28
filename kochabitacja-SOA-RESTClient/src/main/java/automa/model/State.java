@@ -1,6 +1,9 @@
 package automa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class State {
+    @JsonIgnore
     private int id;
     private String stateName;
 

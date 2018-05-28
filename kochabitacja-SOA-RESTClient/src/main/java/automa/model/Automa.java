@@ -1,8 +1,11 @@
 package automa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class Automa {
+    @JsonIgnore
     private int id;
     private String name;
     private List<State> states;
@@ -16,6 +19,14 @@ public class Automa {
 
     public Automa(String name, List<automa.model.State> states) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
