@@ -1,6 +1,7 @@
 package automa.repository;
 
 import automa.model.Automa;
+import automa.model.State;
 
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
@@ -20,18 +21,24 @@ public class AutomaRepository implements Serializable {
     @PersistenceContext(unitName = "MySqlDS")
     private EntityManager entityManager;
 
-    public boolean updateAutoma(int id, Automa newStudent) {
-        Automa s = getOneStudent(id);
-        if (s == null) return false;
-        s.setName(newStudent.getName());
+    public boolean updateAutoma(int id, Automa newAutoma) {
+        Automa automa = getAutoma(id);
+        if (automa == null) return false;
+        automa.setName(newAutoma.getName());
+        automa.setStates(newAutoma.getStates());
+        entityManager.persist(automa);
+        if(automa.getStates()!=null)
+            newAutoma.getStates().forEach(state -> {
+                state.setAutoma(automa);
+                entityManager.persist(state);
+            });
 //        s.setStates(newStudent.getStates());
-        entityManager.persist(s);
         return true;
     }
 
 
 
-    public List<Automa> getAllAutomatasList() {
+    public List<Automa> getAllAuutomatas() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Automa> cq = cb.createQuery(Automa.class);
         Root<Automa> rootEntry = cq.from(Automa.class);
@@ -41,16 +48,16 @@ public class AutomaRepository implements Serializable {
     }
 
 
-    public boolean deleteStudent(int id) {
+    public boolean deleteAutoma(int id) {
         try {
-            entityManager.remove(getOneStudent(id));
+            entityManager.remove(getAutoma(id));
             return true;
         } catch (NoResultException e) {
             return false;
         }
     }
 
-    public Automa getOneStudent(int id) {
+    public Automa getAutoma(int id) {
         try {
             Object o = entityManager
                     .createNamedQuery(Automa.AUTOMA_BY_ID, Automa.class)
@@ -62,7 +69,14 @@ public class AutomaRepository implements Serializable {
         }
     }
 
-    public void addStudent(@NotNull Automa automa) {
+    public void createAutoma(@NotNull Automa automa) {
+        List<State> states = automa.getStates();
+        automa.setStates(null);
         entityManager.persist(automa);
+        if(states!=null)
+            states.forEach(state -> {
+                state.setAutoma(automa);
+                entityManager.persist(state);
+            });
     }
 }

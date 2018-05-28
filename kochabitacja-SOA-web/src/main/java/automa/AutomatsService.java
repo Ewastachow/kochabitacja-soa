@@ -14,15 +14,8 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.UriInfo;
 
 @Path("/automats")
@@ -43,7 +36,7 @@ public class AutomatsService {
         String minStatesFilter = info.getQueryParameters().getFirst("minStatesAmong");
         String maxStatesFilter = info.getQueryParameters().getFirst("maxStatesAmong");
 
-        List<Automa> a = studentRepo.getAllAutomatasList();
+        List<Automa> a = studentRepo.getAllAuutomatas();
 
         a = nameFilter==null ? a :
                 a.stream()
@@ -67,7 +60,7 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     @Path("{id}")
     public Response getAutomaById(@PathParam("id") int id) {
-        Automa s = studentRepo.getOneStudent(id);
+        Automa s = studentRepo.getAutoma(id);
         if (s == null) return Response.status(404).build();
         return Response.status(200).entity(s).build();
     }
@@ -77,7 +70,7 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     @Path("{id}/states")
     public Response getAutomaStatesByAutomaId(@PathParam("id") int id) {
-        Automa s = studentRepo.getOneStudent(id);
+        Automa s = studentRepo.getAutoma(id);
         if (s == null) return Response.status(404).build();
         return Response.status(200).entity(s.getStates()).build();
     }
@@ -87,7 +80,7 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     public Response postAutoma(@NotNull @Valid Automa student) {
         try {
-            studentRepo.addStudent(student);
+            studentRepo.createAutoma(student);
             return Response.status(201).build();
         } catch (EJBException e) {
             if (e.getCause() instanceof ConstraintViolationException)
@@ -102,7 +95,7 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     public Response postStateToAutoma(@PathParam("id") int id, @NotNull @Valid State state) {
         try {
-            stateRepo.createState(state,studentRepo.getOneStudent(id));
+            stateRepo.createState(state,studentRepo.getAutoma(id));
             return Response.status(201).build();
         } catch (EJBException e) {
             if (e.getCause() instanceof ConstraintViolationException)
@@ -134,7 +127,7 @@ public class AutomatsService {
     @Path("{id}")
 //    @RolesAllowed("user")
     public Response deleteAutoma(@PathParam("id") int id) {
-        return Response.status(studentRepo.deleteStudent(id) ? 204 : 404).build();
+        return Response.status(studentRepo.deleteAutoma(id) ? 204 : 404).build();
     }
 
     @DELETE
@@ -142,7 +135,7 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     public Response deleteState(@PathParam("idState") int idState,@PathParam("idAutoma") int idAutoma) {
         System.out.println("asdasdasdasdasdasdasdas");
-        return Response.status(stateRepo.deleteState(idState, studentRepo.getOneStudent(idAutoma)) ? 204 : 404).build();
+        return Response.status(stateRepo.deleteState(idState, studentRepo.getAutoma(idAutoma)) ? 204 : 404).build();
     }
 //
 //    @GET
