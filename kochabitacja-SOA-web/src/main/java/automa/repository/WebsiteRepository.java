@@ -1,6 +1,5 @@
 package automa.repository;
 
-import automa.model.Automa;
 import automa.model.Image;
 import automa.model.Website;
 

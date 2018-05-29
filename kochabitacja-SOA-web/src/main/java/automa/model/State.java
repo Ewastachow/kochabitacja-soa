@@ -26,11 +26,6 @@ public class State {
     public State() {
     }
 
-    public State(String stateName, Automa automa) {
-        this.stateName = stateName;
-        this.automa = automa;
-    }
-
     public String getStateName() {
         return stateName;
     }

@@ -1,8 +1,5 @@
 package automa;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.DenyAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;

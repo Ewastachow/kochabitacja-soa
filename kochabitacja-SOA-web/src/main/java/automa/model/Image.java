@@ -22,8 +22,6 @@ public class Image {
     @NotNull
     private String name;
 
-//    @Column(ty = "PERSON_ID")
-//    @Lob(type = LobType.BLOB)
     @Lob
     @JsonIgnore
     private byte[] source;

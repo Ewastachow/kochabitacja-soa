@@ -55,7 +55,7 @@ public class AutomaRepository implements Serializable {
 
 
 
-    public List<Automa> getAllAuutomatas(String nameFilter, String minStatesFilter, String maxStatesFilter) {
+    public List<Automa> getAllAuutomatas() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Automa> cq = cb.createQuery(Automa.class);
         Root<Automa> rootEntry = cq.from(Automa.class);
@@ -88,19 +88,12 @@ public class AutomaRepository implements Serializable {
 
     public void createAutoma(@NotNull Automa automa) {
         List<State> states = automa.getStates();
-//        List<Contribiutor> contribiutors = automa.getContribiutors();
         automa.setStates(null);
-//        automa.setContribiutors(null);
         entityManager.persist(automa);
         if(states!=null)
             states.forEach(state -> {
                 state.setAutoma(automa);
                 entityManager.persist(state);
             });
-//        if(contribiutors!=null)
-//            contribiutors.forEach(contribiutor -> {
-//                contribiutor.getAutomas().add(automa);
-//                entityManager.persist(contribiutor);
-//            });
     }
 }

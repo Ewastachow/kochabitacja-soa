@@ -46,7 +46,7 @@ public class ImageRepository implements Serializable {
         entityManager.persist(i);
     }
 
-    public boolean updateStudent(int id, Image newImage) {
+    public boolean updateImage(int id, Image newImage) {
         Image s = readImage(id);
         if (s == null) return false;
         s.setName(newImage.getName());

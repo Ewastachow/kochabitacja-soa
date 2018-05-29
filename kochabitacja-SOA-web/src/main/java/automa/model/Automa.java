@@ -15,8 +15,6 @@ import java.util.List;
 @Stateless
 @Entity
 @Data
-//@RequiredArgsConstructor
-//@NoArgsConstructor
 @NamedQueries({@NamedQuery(name = Automa.AUTOMA_BY_ID, query = "SELECT a from Automa a where a.id = :id")})
 public class Automa {
 
@@ -33,23 +31,17 @@ public class Automa {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "automa", cascade = CascadeType.ALL)
     private List<State> states;
 
-
-//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "automas", cascade = CascadeType.ALL)
-//    private List<Contribiutor> contribiutors;
-
     public Automa() {
-//        this.contribiutors = new ArrayList<>();
         this.states = new ArrayList<>();
     }
 
-//    public Automa(String name) {
-//        this.name = name;
-//    }
-//
-//    public Automa(String name, List<automa.model.State> states) {
-//        this.name = name;
-////        this.states = states;
-//    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -67,19 +59,10 @@ public class Automa {
         this.states = states;
     }
 
-//    public List<Contribiutor> getContribiutors() {
-//        return contribiutors;
-//    }
-//
-//    public void setContribiutors(List<Contribiutor> contribiutors) {
-//        this.contribiutors = contribiutors;
-//    }
-
     @Override
     public String toString() {
         return "Automa{" +
                 "name='" + name + '\'' +
-//                ", states=" + states +
                 '}';
     }
 }
