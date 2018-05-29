@@ -33,17 +33,23 @@ public class Automa {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "automa", cascade = CascadeType.ALL)
     private List<State> states;
 
+
+//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "automas", cascade = CascadeType.ALL)
+//    private List<Contribiutor> contribiutors;
+
     public Automa() {
+//        this.contribiutors = new ArrayList<>();
+        this.states = new ArrayList<>();
     }
 
-    public Automa(String name) {
-        this.name = name;
-    }
-
-    public Automa(String name, List<automa.model.State> states) {
-        this.name = name;
-//        this.states = states;
-    }
+//    public Automa(String name) {
+//        this.name = name;
+//    }
+//
+//    public Automa(String name, List<automa.model.State> states) {
+//        this.name = name;
+////        this.states = states;
+//    }
 
     public String getName() {
         return name;
@@ -60,6 +66,14 @@ public class Automa {
     public void setStates(List<State> states) {
         this.states = states;
     }
+
+//    public List<Contribiutor> getContribiutors() {
+//        return contribiutors;
+//    }
+//
+//    public void setContribiutors(List<Contribiutor> contribiutors) {
+//        this.contribiutors = contribiutors;
+//    }
 
     @Override
     public String toString() {

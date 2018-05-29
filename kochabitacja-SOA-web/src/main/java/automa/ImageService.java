@@ -2,7 +2,9 @@ package automa;
 
 import automa.model.Automa;
 import automa.model.Image;
+import automa.model.Website;
 import automa.repository.ImageRepository;
+import automa.repository.WebsiteRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/images")
 @Stateless
@@ -22,6 +25,8 @@ public class ImageService {
 
     @Inject
     private ImageRepository imageRepo;
+    @Inject
+    private WebsiteRepository websiteRepo;
 
     @GET
     @Produces("application/json")
@@ -90,5 +95,18 @@ public class ImageService {
         } catch (IOException e) {
             return Response.status(500).build();
         }
+    }
+
+
+    @GET
+    @Path("{id}/websites")
+    @Produces("application/json")
+//    @RolesAllowed("user")
+    public Response getContribiutorAutomas(@PathParam("id") int id) {
+        Image a = imageRepo.readImage(id);
+        List<Website> automas = websiteRepo.getAllWebsite();
+        if (a == null)  return Response.status(404).build();
+        List<Website> result = automas.stream().filter(automa -> automa.getImages().stream().anyMatch(con -> con.getName().equals(a.getName()))).collect(Collectors.toList());
+        return Response.status(200).entity(result).build();
     }
 }

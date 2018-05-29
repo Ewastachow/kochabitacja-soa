@@ -80,6 +80,8 @@ public class AutomatsService {
 //    @RolesAllowed("user")
     public Response postAutoma(@NotNull @Valid Automa student) {
         try {
+            if(student.getName().length()<3)
+                return Response.status(400).build();
             studentRepo.createAutoma(student);
             return Response.status(201).build();
         } catch (EJBException e) {

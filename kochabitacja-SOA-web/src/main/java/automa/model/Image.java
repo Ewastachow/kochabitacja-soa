@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Stateless
 @Entity
@@ -21,12 +22,16 @@ public class Image {
     @NotNull
     private String name;
 
-    @NotNull
 //    @Column(ty = "PERSON_ID")
 //    @Lob(type = LobType.BLOB)
     @Lob
     @JsonIgnore
     private byte[] source;
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "images")
+    private List<Website> websites;
 
     public Image() {
     }
@@ -58,5 +63,13 @@ public class Image {
 
     public void setSource(byte[] source) {
         this.source = source;
+    }
+
+    public List<Website> getWebsites() {
+        return websites;
+    }
+
+    public void setWebsites(List<Website> websites) {
+        this.websites = websites;
     }
 }

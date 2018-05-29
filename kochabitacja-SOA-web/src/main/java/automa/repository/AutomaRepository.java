@@ -1,6 +1,7 @@
 package automa.repository;
 
 import automa.model.Automa;
+//import automa.model.Contribiutor;
 import automa.model.State;
 
 import javax.inject.Singleton;
@@ -59,14 +60,6 @@ public class AutomaRepository implements Serializable {
         CriteriaQuery<Automa> cq = cb.createQuery(Automa.class);
         Root<Automa> rootEntry = cq.from(Automa.class);
         CriteriaQuery<Automa> all = cq.select(rootEntry);
-//        ParameterExpression<String> nameF = cb.parameter(String.class);
-//        ParameterExpression<Integer> minF = cb.parameter(Integer.class);
-//        ParameterExpression<Integer> maxF = cb.parameter(Integer.class);
-//        CriteriaQuery<Automa> name = all.where(
-//                cb.equal(rootEntry.get("name"), nameF),
-//                cb.gt(rootEntry.get("name"), minF),
-//
-//        );
         TypedQuery<Automa> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
@@ -95,12 +88,19 @@ public class AutomaRepository implements Serializable {
 
     public void createAutoma(@NotNull Automa automa) {
         List<State> states = automa.getStates();
+//        List<Contribiutor> contribiutors = automa.getContribiutors();
         automa.setStates(null);
+//        automa.setContribiutors(null);
         entityManager.persist(automa);
         if(states!=null)
             states.forEach(state -> {
                 state.setAutoma(automa);
                 entityManager.persist(state);
             });
+//        if(contribiutors!=null)
+//            contribiutors.forEach(contribiutor -> {
+//                contribiutor.getAutomas().add(automa);
+//                entityManager.persist(contribiutor);
+//            });
     }
 }
